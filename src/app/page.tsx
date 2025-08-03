@@ -1,103 +1,241 @@
-import Image from "next/image";
+'use client';
+
+import { useState } from 'react';
+import { 
+  MinesweeperGame,
+  TicTacToeGame,
+  SnakeGame,
+  MemoryGame,
+  SnakeLadderGame,
+  CollegeGame,
+  FlappyBirdGame,
+  TetrisGame,
+  PongGame
+} from '../games';
+
+type GameType = 'minesweeper' | 'tictactoe' | 'snake' | 'memory' | 'snakeladder' | 'college' | 'flappybird' | 'tetris' | 'pong';
+
+const GAMES = {
+  minesweeper: {
+    name: 'Minesweeper',
+    description: 'Classic mine detection game',
+    icon: '💣',
+    color1: '#2563eb',
+    color2: '#7c3aed'
+  },
+  tictactoe: {
+    name: 'Tic Tac Toe',
+    description: 'Classic X and O game',
+    icon: '⭕',
+    color1: '#16a34a',
+    color2: '#0d9488'
+  },
+  snake: {
+    name: 'Snake',
+    description: 'Classic snake eating game',
+    icon: '🐍',
+    color1: '#ca8a04',
+    color2: '#ea580c'
+  },
+  memory: {
+    name: 'Memory Card',
+    description: 'Find matching card pairs',
+    icon: '🎴',
+    color1: '#ec4899',
+    color2: '#dc2626'
+  },
+  snakeladder: {
+    name: 'Snake & Ladder',
+    description: 'Classic board game with dice',
+    icon: '🎲',
+    color1: '#4f46e5',
+    color2: '#7c3aed'
+  },
+  college: {
+    name: 'Lulus Kuliah',
+    description: 'Resource management game',
+    icon: '🎓',
+    color1: '#0891b2',
+    color2: '#0e7490'
+  },
+  flappybird: {
+    name: 'Flappy Bird',
+    description: 'Navigate through pipes',
+    icon: '🐦',
+    color1: '#f59e0b',
+    color2: '#d97706'
+  },
+  tetris: {
+    name: 'Tetris',
+    description: 'Classic block stacking game',
+    icon: '🧩',
+    color1: '#8b5cf6',
+    color2: '#7c3aed'
+  },
+  pong: {
+    name: 'Pong',
+    description: 'Classic paddle game',
+    icon: '🏓',
+    color1: '#06b6d4',
+    color2: '#0891b2'
+  }
+};
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [selectedGame, setSelectedGame] = useState<GameType | null>(null);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+  const renderGame = () => {
+    switch (selectedGame) {
+      case 'minesweeper':
+        return <MinesweeperGame />;
+      case 'tictactoe':
+        return <TicTacToeGame />;
+      case 'snake':
+        return <SnakeGame />;
+      case 'memory':
+        return <MemoryGame />;
+      case 'snakeladder':
+        return <SnakeLadderGame />;
+      case 'college':
+        return <CollegeGame />;
+      case 'flappybird':
+        return <FlappyBirdGame />;
+      case 'tetris':
+        return <TetrisGame />;
+      case 'pong':
+        return <PongGame />;
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <main style={{
+      minHeight: '100vh',
+      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      padding: '1rem'
+    }}>
+      <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
+        {!selectedGame ? (
+          // Game Selection Screen
+          <div style={{ textAlign: 'center', paddingTop: '2rem' }}>
+            <h1 style={{
+              fontSize: '3rem',
+              fontWeight: 'bold',
+              color: 'white',
+              marginBottom: '1rem',
+              textShadow: '2px 2px 4px rgba(0,0,0,0.3)'
+            }}>
+              🎮 Mini Games Hub
+            </h1>
+            <p style={{
+              fontSize: '1.2rem',
+              color: 'white',
+              marginBottom: '3rem',
+              opacity: 0.9
+            }}>
+              Choose your favorite game to play!
+            </p>
+            
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              gap: '1.5rem',
+              maxWidth: '1400px',
+              margin: '0 auto'
+            }}>
+              {Object.entries(GAMES).map(([key, game]) => (
+                <button
+                  key={key}
+                  onClick={() => setSelectedGame(key as GameType)}
+                  style={{
+                    background: `linear-gradient(135deg, ${game.color1} 0%, ${game.color2} 100%)`,
+                    border: 'none',
+                    borderRadius: '12px',
+                    padding: '2rem',
+                    cursor: 'pointer',
+                    transition: 'all 0.3s ease',
+                    boxShadow: '0 8px 25px rgba(0,0,0,0.2)',
+                    color: 'white',
+                    textAlign: 'center'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-5px)';
+                    e.currentTarget.style.boxShadow = '0 12px 35px rgba(0,0,0,0.3)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.2)';
+                  }}
+                >
+                  <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>
+                    {game.icon}
+                  </div>
+                  <h3 style={{
+                    fontSize: '1.5rem',
+                    fontWeight: 'bold',
+                    marginBottom: '0.5rem'
+                  }}>
+                    {game.name}
+                  </h3>
+                  <p style={{
+                    fontSize: '1rem',
+                    opacity: 0.9
+                  }}>
+                    {game.description}
+                  </p>
+                </button>
+              ))}
+            </div>
+          </div>
+        ) : (
+          // Game Screen
+          <div>
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              marginBottom: '2rem',
+              padding: '1rem',
+              background: 'rgba(255,255,255,0.1)',
+              borderRadius: '12px',
+              backdropFilter: 'blur(10px)'
+            }}>
+              <h1 style={{
+                fontSize: '2rem',
+                fontWeight: 'bold',
+                color: 'white',
+                margin: 0
+              }}>
+                {GAMES[selectedGame].icon} {GAMES[selectedGame].name}
+              </h1>
+              <button
+                onClick={() => setSelectedGame(null)}
+                style={{
+                  background: 'rgba(255,255,255,0.2)',
+                  border: 'none',
+                  borderRadius: '8px',
+                  padding: '0.75rem 1.5rem',
+                  color: 'white',
+                  cursor: 'pointer',
+                  fontSize: '1rem',
+                  fontWeight: '500',
+                  transition: 'background-color 0.2s'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = 'rgba(255,255,255,0.3)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = 'rgba(255,255,255,0.2)';
+                }}
+              >
+                ← Back to Games
+              </button>
+            </div>
+            {renderGame()}
+          </div>
+        )}
+      </div>
+    </main>
   );
 }
